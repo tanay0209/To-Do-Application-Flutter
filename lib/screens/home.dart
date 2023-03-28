@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const SizedBox(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             } else {
@@ -64,10 +64,11 @@ class _HomeState extends State<Home> {
                     var time = (docs[index]['timeStamp'] as Timestamp).toDate();
                     return Card(
                       child: ListTile(
+                        contentPadding: const EdgeInsets.all(12),
                         isThreeLine: true,
                         title: Text(
-                            '${docs[index]['title']}  ${DateFormat.yMd().add_jm().format(time)}'),
-                        subtitle: Text(docs[index]['description']),
+                            '${docs[index]['title']}  \n'),
+                        subtitle: Text('${DateFormat.yMd().add_jm().format(time)} \n${docs[index]['description']}'),
                         trailing: InkWell(
                           onTap: () async {
                             await FirebaseFirestore.instance
@@ -78,6 +79,7 @@ class _HomeState extends State<Home> {
                                 .delete();
                           },
                           child: const Icon(Icons.delete),
+
                         ),
                       ),
                     );
